@@ -1,11 +1,15 @@
 import React from 'react';
 import "../sass/Dock.sass";
 import a from "./img/a.jpeg";
-export default class Loading extends React.Component {
+interface Dock {
+    windowsAdd: Function
+}
+
+export default class Loading extends React.Component<{windowsAdd: Function}> {
 
     private appList: Array<any>;
 
-    constructor(props: any) {
+    constructor(props: Dock) {
         super(props);
         this.appList = [
             { icon: a, appName: "dsa", height: "50px" },
@@ -13,7 +17,6 @@ export default class Loading extends React.Component {
             { icon: a, appName: "sad", height: "50px" },
             { icon: a, appName: "sdsad", height: "50px" }
         ]
-        this.setState({ appList: this.appList })
     }
 
     render() {
@@ -37,7 +40,7 @@ export default class Loading extends React.Component {
                                     }
                                     onClick={
                                         () => {
-
+                                            this.props.windowsAdd("WTF", a, "w")
                                         }
                                     }
                                 >

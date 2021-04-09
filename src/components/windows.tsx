@@ -2,7 +2,11 @@ import React from 'react';
 import "../sass/Windows.sass";
 import appicon from"./img/a.jpeg"
 
-export default class Windows extends React.Component {
+interface windows {
+    windows: Array<any>
+}
+
+export default class Windows extends React.Component<{ windows: Array<any> }, {}> {
 
     private windows: Array<any>;
     private windowMobileSwitch: boolean;
@@ -13,31 +17,14 @@ export default class Windows extends React.Component {
     private windowFocus: number | null;
     private windowsStyle: React.CSSProperties;
 
-    constructor(props: React.Component<{}, {}, any>) {
+    constructor(props: windows) {
         super(props);
         this.windowMobileSwitch = false;
         this.width = 300;
         this.heigth = 300;
         this.x = document.body.clientWidth / 2 - 150;
         this.y = document.body.clientHeight / 2 -150
-        this.windows = [
-            {
-                title: "test",
-                icon: appicon,
-                width: this.width,
-                height: this.heigth,
-                left: this.x,
-                top: this.y
-            },
-            {
-                title: "test2",
-                icon: appicon,
-                width: this.width,
-                height: this.heigth,
-                left: this.x,
-                top: this.y
-            }
-        ];
+        this.windows = props.windows;
         this.windowFocus = null;
         this.windowsStyle = {};
     }
@@ -138,9 +125,5 @@ export default class Windows extends React.Component {
         this.windows[index].left = this.x + "px";
         this.windows[index].top = this.y + "px";
         this.setState({ windows: this.windows });
-    }
-
-    addWindow() {
-
     }
 }

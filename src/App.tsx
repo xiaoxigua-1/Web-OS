@@ -9,11 +9,12 @@ import Windows from "./components/windows";
 class App extends React.Component {
 
     //private ws: MessageWS;
-
-    constructor() {
-        super({})
+    private windows: Array<any>;
+    constructor(props: React.Component<{}, {}, any>) {
+        super(props)
+        this.windows = [
+        ];
         //this.ws = new MessageWS("ws://127.0.0.1:8000")
-        //console.log(this.ws)
     }
 
     render() {
@@ -23,10 +24,25 @@ class App extends React.Component {
 
                 </header>
                 <Desktop />
-                <Dock />
-                <Windows />
+                <Dock windowsAdd={this.addWindow()} />
+                <Windows windows={this.windows} />
             </div>
         );
+    }
+
+    addWindow() {
+        return (title: string, icon: string, app: any) => {
+            this.windows.push({
+                title: title,
+                icon: icon,
+                width: "300px",
+                height: "300px",
+                left: document.body.clientWidth / 2 - 150 + this.windows.length * 10,
+                top: document.body.clientHeight / 2 - 150 + this.windows.length * 10,
+                content: app
+            })
+            this.setState({windows: this.windows});
+        }
     }
 };
 
