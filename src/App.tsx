@@ -1,9 +1,11 @@
 import React from 'react';
 import { MessageWS } from "./methods/websocket";
 import { Axios } from "./methods/Axios";
-import Dock from "./components/dock";
 import "./sass/Main.sass";
+import Dock from "./components/dock";
 import Desktop from "./components/desktop";
+import Windows from "./components/windows";
+
 class App extends React.Component {
 
     //private ws: MessageWS;
@@ -22,7 +24,7 @@ class App extends React.Component {
                 </header>
                 <Desktop />
                 <Dock />
-                
+                <Windows />
             </div>
         );
     }
