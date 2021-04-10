@@ -1,14 +1,12 @@
 import React from 'react';
 import "../sass/Windows.sass";
 import appicon from"./img/a.jpeg"
+import { windows, window } from "../type/window";
 
-interface windows {
-    windows: Array<any>
-}
 
-export default class Windows extends React.Component<{ windows: Array<any> }, {}> {
+export default class Windows extends React.Component<{ windows: Array<window> }, {}> {
 
-    private windows: Array<any>;
+    private windows: Array<window>;
     private windowMobileSwitch: boolean;
     private width: number;
     private heigth: number;
@@ -16,6 +14,10 @@ export default class Windows extends React.Component<{ windows: Array<any> }, {}
     private y: number;
     private windowFocus: number | null;
     private windowsStyle: React.CSSProperties;
+    private windowsFocusIndex: number | null;
+    private windowInitX: number;
+    private windowInitY: number;
+    private windowSizeSwitch: boolean;
 
     constructor(props: windows) {
         super(props);
@@ -27,6 +29,10 @@ export default class Windows extends React.Component<{ windows: Array<any> }, {}
         this.windows = props.windows;
         this.windowFocus = null;
         this.windowsStyle = {};
+        this.windowsFocusIndex = null;
+        this.windowInitX = 0;
+        this.windowInitY = 0;
+        this.windowSizeSwitch = false;
     }
     
     render() {
@@ -35,7 +41,6 @@ export default class Windows extends React.Component<{ windows: Array<any> }, {}
             <div id="windows"
                 onMouseMove={
                     (e) => {
-                        console.log(e.clientX);
                         if(this.windowFocus !== null)
                             this.windowMobile(e, this.windowFocus);
                     }
@@ -50,8 +55,15 @@ export default class Windows extends React.Component<{ windows: Array<any> }, {}
                                     height: v.height, 
                                     width: v.width,
                                     left: v.left,
-                                    top: v.top
+                                    top: v.top,
+                                    opacity: v.style.opacity,
+                                    zIndex: this.windowsFocusIndex === index ? 1 : "auto"
                                 }}
+                                onMouseDown={
+                                    () => {
+                                        this.windowsFocus(index);
+                                    }
+                                }
                             >
                                 <div className="window-header"
                                     onMouseDown={
@@ -83,22 +95,33 @@ export default class Windows extends React.Component<{ windows: Array<any> }, {}
                                         {v.title}
                                     </div>
                                     <span className="window-tool">
-                                        <div className="window--">
+                                        <div className="window--"
+                                            onClick={
+                                                () => {
+                                                    this.hideWindow(index);
+                                                }
+                                            }
+                                        >
                                         </div>
-                                        <div className="window-x">
+                                        <div className="window-x"
+                                            onClick={
+                                                (e) => {
+                                                    this.deleteWindow(index);
+                                                }
+                                            }
+                                        >
                                         </div>
         
                                     </span>
                                 </div>
                                 <div className="window-content">
+                                    {
+                                        v.content
+                                    }
+                                </div>
+                                <div className="window-bottom">
 
                                 </div>
-                                <span className="window-top">
-
-                                </span>
-                                <span className="window-bottom">
-
-                                </span>
                             </div>
                         );
                     })
@@ -111,19 +134,52 @@ export default class Windows extends React.Component<{ windows: Array<any> }, {}
         if(this.windowMobileSwitch) {
             this.x = event.clientX - this.width / 2;
             this.y = event.clientY - 15;
+            if(
+                this.x + this.width > document.body.clientWidth ||
+                this.y + this.heigth > document.body.clientHeight ||
+                this.x < 0 ||
+                this.y < 0
+                ) {
+                
+            } else {
+
+            }
             this.setWindow(index);
         }
     }
 
-    private windowSize(event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number, position: number) {
+    private windowsFocus(index: number) {
+        this.windowsFocusIndex = index;
+    }
 
+    private windowSize(event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number, position: number) {
+        let YAmountOfChange = this.windowInitY - event.clientY;
+        let XAmountOfChange = this.windowInitX - event.clientX;
+        if(position === 1) {
+            this.heigth += YAmountOfChange;
+        }
+
+        this.setWindow(index);
+    }
+
+    private hideWindow(index: number) {
+        this.windows[index].style = {
+            opacity: 0,
+
+        };
+        this.setState({ windows: this.windows });
+    }
+
+    private deleteWindow(index: number) {
+        this.windows.splice(index, 1);
+        this.setState({ windows: this.windows });
     }
 
     private setWindow(index: number) {
-        this.windows[index].width = this.width;
-        this.windows[index].heigth = this.heigth;
-        this.windows[index].left = this.x + "px";
-        this.windows[index].top = this.y + "px";
+        this.windows[index].width = this.width + "px";
+        this.windows[index].height = this.heigth + "px";
+        this.windows[index].left = this.x;
+        this.windows[index].top = this.y;
         this.setState({ windows: this.windows });
     }
 }

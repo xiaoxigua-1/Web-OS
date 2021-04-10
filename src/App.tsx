@@ -5,11 +5,12 @@ import "./sass/Main.sass";
 import Dock from "./components/dock";
 import Desktop from "./components/desktop";
 import Windows from "./components/windows";
+import { window } from "./type/window";
 
 class App extends React.Component {
 
     //private ws: MessageWS;
-    private windows: Array<any>;
+    private windows: Array<window>;
     constructor(props: React.Component<{}, {}, any>) {
         super(props)
         this.windows = [
@@ -39,6 +40,7 @@ class App extends React.Component {
                 height: "300px",
                 left: document.body.clientWidth / 2 - 150 + this.windows.length * 10,
                 top: document.body.clientHeight / 2 - 150 + this.windows.length * 10,
+                style: {},
                 content: app
             })
             this.setState({windows: this.windows});
