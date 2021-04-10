@@ -5,8 +5,8 @@ export interface windows {
 export interface window {
     title: string,
     icon: string,
-    width: string,
-    height: string,
+    width: number,
+    height: number,
     top: number,
     left: number,
     style: React.CSSProperties,

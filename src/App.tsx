@@ -1,5 +1,4 @@
 import React from 'react';
-import { MessageWS } from "./methods/websocket";
 import { Axios } from "./methods/Axios";
 import "./sass/Main.sass";
 import Dock from "./components/dock";
@@ -22,7 +21,6 @@ class App extends React.Component {
         return (
             <div className="App">
                 <header className="App-header">
-
                 </header>
                 <Desktop />
                 <Dock windowsAdd={this.addWindow()} />
@@ -36,8 +34,8 @@ class App extends React.Component {
             this.windows.push({
                 title: title,
                 icon: icon,
-                width: "300px",
-                height: "300px",
+                width: 800,
+                height: 300,
                 left: document.body.clientWidth / 2 - 150 + this.windows.length * 10,
                 top: document.body.clientHeight / 2 - 150 + this.windows.length * 10,
                 style: {},

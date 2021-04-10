@@ -49,6 +49,7 @@ export default class Windows extends React.Component<{ windows: Array<window> },
             >
                 {
                     this.windows.map((v, index) => {
+                        
                         return(
                             <div className="window" 
                                 style={{ 
@@ -62,8 +63,14 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                 onMouseDown={
                                     () => {
                                         this.windowsFocus(index);
+
                                     }
                                 }
+                                // onMouseMove={
+                                //     (e) => {
+                                //         this.windowSize(e, index);
+                                //     }
+                                // }
                             >
                                 <div className="window-header"
                                     onMouseDown={
@@ -119,9 +126,6 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                         v.content
                                     }
                                 </div>
-                                <div className="window-bottom">
-
-                                </div>
                             </div>
                         );
                     })
@@ -132,8 +136,10 @@ export default class Windows extends React.Component<{ windows: Array<window> },
 
     private windowMobile(event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) {
         if(this.windowMobileSwitch) {
-            this.x = event.clientX - this.width / 2;
+            this.x = event.clientX - this.width / 2 - 48;
             this.y = event.clientY - 15;
+            this.width = this.windows[index].width;
+            this.heigth = this.windows[index].height;
             if(
                 this.x + this.width > document.body.clientWidth ||
                 this.y + this.heigth > document.body.clientHeight ||
@@ -144,28 +150,36 @@ export default class Windows extends React.Component<{ windows: Array<window> },
             } else {
 
             }
+            console.log(this.x, this.y)
             this.setWindow(index);
         }
     }
 
     private windowsFocus(index: number) {
         this.windowsFocusIndex = index;
+        this.setState({ windows: this.windows });
     }
 
-    private windowSize(event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number, position: number) {
+    private windowSize(event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) {
         let YAmountOfChange = this.windowInitY - event.clientY;
         let XAmountOfChange = this.windowInitX - event.clientX;
-        if(position === 1) {
-            this.heigth += YAmountOfChange;
+        let position = 0;
+        if(
+            this.windows[index].left + 50 <= event.clientX &&
+            event.clientX <= this.windows[index].left + 54
+        ) {
+            console.log("ww");
         }
-
+        // if(position === 1) {
+        //     this.heigth += YAmountOfChange;
+        // }
+        
         this.setWindow(index);
     }
 
     private hideWindow(index: number) {
         this.windows[index].style = {
             opacity: 0,
-
         };
         this.setState({ windows: this.windows });
     }
@@ -176,8 +190,8 @@ export default class Windows extends React.Component<{ windows: Array<window> },
     }
 
     private setWindow(index: number) {
-        this.windows[index].width = this.width + "px";
-        this.windows[index].height = this.heigth + "px";
+        this.windows[index].width = this.width;
+        this.windows[index].height = this.heigth;
         this.windows[index].left = this.x;
         this.windows[index].top = this.y;
         this.setState({ windows: this.windows });
