@@ -3,11 +3,10 @@ import "../sass/Dock.sass";
 import setting from "../icons/PNGS/control-center.png";
 import folder from "../icons/PNGS/folder.png";
 import Setting from "./App/setting";
-interface Dock {
-    windowsAdd: Function
-}
+import { Dock } from "../type/dock";
 
-export default class Loading extends React.Component<{windowsAdd: Function}> {
+
+export default class Loading extends React.Component<Dock> {
 
     private appList: Array<any>;
 
