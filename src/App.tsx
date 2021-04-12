@@ -41,7 +41,7 @@ class App extends React.Component {
                 style: {},
                 app: app
             })
-            this.setState({windows: this.windows});
+            this.setState({ windows: this.windows });
         }
     }
 };

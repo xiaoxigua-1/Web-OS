@@ -3,15 +3,16 @@ import "../sass/Dock.sass";
 import setting from "../icons/PNGS/control-center.png";
 import folder from "../icons/PNGS/folder.png";
 import Setting from "./App/setting";
-import { Dock } from "../type/dock";
+import { DockType } from "../type/dock";
 
 
-export default class Loading extends React.Component<Dock> {
+export default class Dock extends React.Component<DockType> {
 
     private appList: Array<any>;
 
-    constructor(props: Dock) {
+    constructor(props: DockType) {
         super(props);
+        //axios get user dock setting
         this.appList = [
             { icon: setting, appName: "dsa", height: "50px", app: <Setting /> },
             { icon: folder, appName: "sad", height: "50px", app: "w" },
@@ -41,7 +42,8 @@ export default class Loading extends React.Component<Dock> {
                                     }
                                     onClick={
                                         () => {
-                                            this.props.windowsAdd("WTF", v.icon, v.app)
+                                            this.props.windowsAdd("WTF", v.icon, v.app);
+                                            this.appIconClick(index)
                                         }
                                     }
                                 >
@@ -76,5 +78,9 @@ export default class Loading extends React.Component<Dock> {
         }
         this.appList[index].height = "50px";
         this.setState({ appList: this.appList });
+    }
+
+    appIconClick(index: number) {
+
     }
 }
