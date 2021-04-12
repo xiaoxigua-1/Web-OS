@@ -1,3 +1,4 @@
+
 export interface windows {
     windows: Array<any>
 }
@@ -10,5 +11,5 @@ export interface window {
     top: number,
     left: number,
     style: React.CSSProperties,
-    content: any
+    app: JSX.Element
 }

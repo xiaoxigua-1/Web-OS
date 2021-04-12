@@ -1,6 +1,8 @@
 import React from 'react';
 import "../sass/Dock.sass";
-import a from "./img/a.jpeg";
+import setting from "../icons/PNGS/control-center.png";
+import folder from "../icons/PNGS/folder.png";
+import Setting from "./App/setting";
 interface Dock {
     windowsAdd: Function
 }
@@ -12,10 +14,10 @@ export default class Loading extends React.Component<{windowsAdd: Function}> {
     constructor(props: Dock) {
         super(props);
         this.appList = [
-            { icon: a, appName: "dsa", height: "50px" },
-            { icon: a, appName: "sad", height: "50px" },
-            { icon: a, appName: "sad", height: "50px" },
-            { icon: a, appName: "sdsad", height: "50px" }
+            { icon: setting, appName: "dsa", height: "50px", app: <Setting /> },
+            { icon: folder, appName: "sad", height: "50px", app: "w" },
+            { icon: setting, appName: "sad", height: "50px", app: "d" },
+            { icon: setting, appName: "sdsad", height: "50px", app: "c" }
         ]
     }
 
@@ -40,7 +42,7 @@ export default class Loading extends React.Component<{windowsAdd: Function}> {
                                     }
                                     onClick={
                                         () => {
-                                            this.props.windowsAdd("WTF", a, "w")
+                                            this.props.windowsAdd("WTF", v.icon, v.app)
                                         }
                                     }
                                 >

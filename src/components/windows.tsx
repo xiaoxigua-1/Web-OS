@@ -3,7 +3,6 @@ import "../sass/Windows.sass";
 import appicon from"./img/a.jpeg"
 import { windows, window } from "../type/window";
 
-
 export default class Windows extends React.Component<{ windows: Array<window> }, {}> {
 
     private windows: Array<window>;
@@ -36,7 +35,6 @@ export default class Windows extends React.Component<{ windows: Array<window> },
     }
     
     render() {
-
         return (
             <div id="windows"
                 onMouseMove={
@@ -49,7 +47,8 @@ export default class Windows extends React.Component<{ windows: Array<window> },
             >
                 {
                     this.windows.map((v, index) => {
-                        
+                        let appContent = v.app;
+
                         return(
                             <div className="window" 
                                 style={{ 
@@ -71,6 +70,7 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                 //         this.windowSize(e, index);
                                 //     }
                                 // }
+                                key={index.toString()}
                             >
                                 <div className="window-header"
                                     onMouseDown={
@@ -97,7 +97,7 @@ export default class Windows extends React.Component<{ windows: Array<window> },
 
          
                                 >
-                                    <img className="window-icon" src={appicon} />
+                                    <img className="window-icon" src={v.icon} />
                                     <div className="window-title">
                                         {v.title}
                                     </div>
@@ -123,7 +123,7 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                 </div>
                                 <div className="window-content">
                                     {
-                                        v.content
+                                        appContent
                                     }
                                 </div>
                             </div>

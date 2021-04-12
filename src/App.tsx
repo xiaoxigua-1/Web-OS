@@ -30,16 +30,16 @@ class App extends React.Component {
     }
 
     addWindow() {
-        return (title: string, icon: string, app: any) => {
+        return (title: string, icon: string, app: JSX.Element) => {
             this.windows.push({
                 title: title,
                 icon: icon,
                 width: 800,
-                height: 300,
-                left: document.body.clientWidth / 2 - 150 + this.windows.length * 10,
-                top: document.body.clientHeight / 2 - 150 + this.windows.length * 10,
+                height: 600,
+                left: document.body.clientWidth / 2 - 400 + this.windows.length * 10,
+                top: document.body.clientHeight / 2 - 300 + this.windows.length * 10,
                 style: {},
-                content: app
+                app: app
             })
             this.setState({windows: this.windows});
         }
