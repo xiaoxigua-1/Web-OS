@@ -11,5 +11,6 @@ export interface window {
     top: number,
     left: number,
     style: React.CSSProperties,
+    outsudeFrameStyle: string
     app: JSX.Element
 }

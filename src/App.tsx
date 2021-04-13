@@ -39,6 +39,7 @@ class App extends React.Component {
                 left: document.body.clientWidth / 2 - 400 + this.windows.length * 10,
                 top: document.body.clientHeight / 2 - 300 + this.windows.length * 10,
                 style: {},
+                outsudeFrameStyle: "auto",
                 app: app
             })
             this.setState({ windows: this.windows });

@@ -31,16 +31,13 @@ export default class Desktop extends React.Component {
             <div id="desktop"
                 onMouseDown={
                     (e) => {
-                        console.log(e.clientX, e.clientY)
                         this.xyInit(e);
                     }
                 }
 
                 onMouseUp={
                     (e) => {
-                        console.log(e.clientX, e.clientY)
                         this.clearXY(e);
-
                     }
                 }
 
