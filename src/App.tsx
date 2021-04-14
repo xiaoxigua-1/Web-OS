@@ -10,6 +10,7 @@ class App extends React.Component {
 
     //private ws: MessageWS;
     private windows: Array<window>;
+    
     constructor(props: React.Component<{}, {}, any>) {
         super(props)
         this.windows = [

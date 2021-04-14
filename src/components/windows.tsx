@@ -1,41 +1,28 @@
 import React from 'react';
 import "../sass/Windows.sass";
-import appicon from "./img/a.jpeg"
 import { windows, window } from "../type/window";
 
 export default class Windows extends React.Component<{ windows: Array<window> }, {}> {
 
     private windows: Array<window>;
     private windowMobileSwitch: boolean;
-    private width: number;
-    private heigth: number;
-    private x: number;
-    private y: number;
     private windowFocus: number | null;
     private windowsStyle: React.CSSProperties;
-    private windowsFocusIndex: number | null;
-    private windowInitX: number;
-    private windowInitY: number;
     private windowSizePosition: number | null;
     private widnowSizeSwitch: boolean;
     private windowSizeFocus: number | null;
+    private windowMobileXY: Array<number>;
 
     constructor(props: windows) {
         super(props);
         this.windowMobileSwitch = false;
-        this.width = 300;
-        this.heigth = 300;
-        this.x = document.body.clientWidth / 2 - 150;
-        this.y = document.body.clientHeight / 2 - 150
         this.windows = props.windows;
         this.windowFocus = null;
         this.windowsStyle = {};
-        this.windowsFocusIndex = null;
-        this.windowInitX = 0;
-        this.windowInitY = 0;
         this.windowSizePosition = null;
         this.widnowSizeSwitch = false;
         this.windowSizeFocus = null;
+        this.windowMobileXY = [];
     }
 
     render() {
@@ -66,7 +53,9 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                         let appContent = v.app;
 
                         return (
-                            <div>
+                            <div
+                                style={{ pointerEvents: v.style.pointerEvents }}
+                            >
                                 <div className="window-outside-frame"
                                     style={{
                                         height: v.height + 8,
@@ -74,7 +63,6 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                         left: v.left - 4,
                                         top: v.top - 4,
                                         cursor: v.outsudeFrameStyle,
-                                        zIndex: this.windowsFocusIndex === index ? 1 : "auto"
                                     }}
                                     onMouseDown={
                                         (e) => {
@@ -88,8 +76,8 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                     onMouseMove={
                                         (e) => {
                                             let windowData = this.windows[index];
-                                            this.windowSizeFocus = index;
                                             if (this.widnowSizeSwitch) return;
+                                            this.windowSizeFocus = index;
                                             if (e.clientX <= windowData.left + 50) {
                                                 v.outsudeFrameStyle = "col-resize";
                                                 this.windowSizePosition = 1;
@@ -128,21 +116,24 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                         left: v.left,
                                         top: v.top,
                                         opacity: v.style.opacity,
-                                        zIndex: this.windowsFocusIndex === index ? 1 : "auto"
                                     }}
                                     onMouseDown={
                                         () => {
                                             this.windowsFocus(index);
-
                                         }
                                     }
                                     key={index.toString()}
                                 >
                                     <div className="window-header"
                                         onMouseDown={
-                                            () => {
+                                            (e) => {
+                                                // this.windowsFocus(index);
                                                 this.windowMobileSwitch = true;
-                                                this.windowFocus = index;
+                                                this.windowFocus = this.windows.length - 1;
+                                                this.windowMobileXY = [
+                                                    e.clientX - this.windows[index].left,
+                                                    e.clientY - this.windows[index].top
+                                                ];
                                                 this.windowsStyle = {
                                                     pointerEvents: "auto"
                                                 }
@@ -204,14 +195,16 @@ export default class Windows extends React.Component<{ windows: Array<window> },
 
     private windowMobile(event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) {
         if (this.windowMobileSwitch) {
-            this.windows[index].left = event.clientX - this.windows[index].width / 2 - 48;
-            this.windows[index].top = event.clientY - 15;
+            this.windows[index].left = event.clientX - this.windowMobileXY[0];
+            this.windows[index].top = event.clientY - this.windowMobileXY[1];
             this.setWindow();
         }
     }
 
     private windowsFocus(index: number) {
-        this.windowsFocusIndex = index;
+        let window = this.windows[index];
+        this.windows.splice(index, 1);
+        this.windows.push(window);
         this.setWindow();
     }
 
@@ -244,6 +237,7 @@ export default class Windows extends React.Component<{ windows: Array<window> },
     private hideWindow(index: number) {
         this.windows[index].style = {
             opacity: 0,
+            pointerEvents: "none"
         };
         this.setWindow();
     }
