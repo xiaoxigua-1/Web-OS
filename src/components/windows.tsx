@@ -168,7 +168,7 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                             >
                                             </div>
                                             <div className="window-x"
-                                                onClick={
+                                                onMouseUp={
                                                     (e) => {
                                                         this.deleteWindow(index);
                                                     }

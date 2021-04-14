@@ -37,8 +37,8 @@ class App extends React.Component {
                 icon: icon,
                 width: 800,
                 height: 600,
-                left: document.body.clientWidth / 2 - 400 + this.windows.length * 10,
-                top: document.body.clientHeight / 2 - 300 + this.windows.length * 10,
+                left: document.body.clientWidth / 2 - 400 + this.windows.length * 20,
+                top: document.body.clientHeight / 2 - 300 + this.windows.length * 20,
                 style: {},
                 outsudeFrameStyle: "auto",
                 app: app
