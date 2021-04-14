@@ -28,7 +28,7 @@ export default class Dock extends React.Component<DockType> {
                     {
                         this.appList.map((v, index) => {
                             return (
-                                <div className="app"
+                                <div className="app" key={index.toString()}
                                     style={{ height: v.height }}
                                     onMouseOver={
                                         () => {

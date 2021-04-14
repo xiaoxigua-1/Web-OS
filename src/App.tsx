@@ -23,7 +23,7 @@ class App extends React.Component {
             <div className="App">
                 <header className="App-header">
                 </header>
-                <Desktop />
+                <Desktop windowsAdd={this.addWindow()}/>
                 <Dock windowsAdd={this.addWindow()} />
                 <Windows windows={this.windows} />
             </div>

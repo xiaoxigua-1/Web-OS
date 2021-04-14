@@ -54,7 +54,10 @@ export default class Windows extends React.Component<{ windows: Array<window> },
 
                         return (
                             <div
-                                style={{ pointerEvents: v.style.pointerEvents }}
+                                style={{
+                                    pointerEvents: v.style.pointerEvents,
+                                }}
+                                key={index.toString()}
                             >
                                 <div className="window-outside-frame"
                                     style={{
@@ -122,7 +125,6 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                             this.windowsFocus(index);
                                         }
                                     }
-                                    key={index.toString()}
                                 >
                                     <div className="window-header"
                                         onMouseDown={
