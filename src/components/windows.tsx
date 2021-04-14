@@ -73,7 +73,8 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                         width: v.width + 8,
                                         left: v.left - 4,
                                         top: v.top - 4,
-                                        cursor: v.outsudeFrameStyle
+                                        cursor: v.outsudeFrameStyle,
+                                        zIndex: this.windowsFocusIndex === index ? 1 : "auto"
                                     }}
                                     onMouseDown={
                                         (e) => {
@@ -88,30 +89,33 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                         (e) => {
                                             let windowData = this.windows[index];
                                             this.windowSizeFocus = index;
-                                            if(e.clientX < windowData.left + 50) {
+                                            if (this.widnowSizeSwitch) return;
+                                            if (e.clientX <= windowData.left + 50) {
                                                 v.outsudeFrameStyle = "col-resize";
                                                 this.windowSizePosition = 1;
-                                                console.log("left");
-                                            } else if(e.clientX > windowData.left + windowData.width + 50) {
+                                                // left
+                                            } else if (e.clientX >= windowData.left + windowData.width + 50) {
                                                 v.outsudeFrameStyle = "col-resize";
                                                 this.windowSizePosition = 2;
-                                                console.log("right");
-                                            } else if(e.clientY < windowData.top) {
+                                                // right
+                                            } else if (e.clientY <= windowData.top) {
                                                 v.outsudeFrameStyle = "row-resize";
                                                 this.windowSizePosition = 3;
-                                                console.log("top");
-                                            } else if(e.clientY > windowData.top + windowData.height) {
+                                                // top
+                                            } else if (e.clientY >= windowData.top + windowData.height) {
                                                 v.outsudeFrameStyle = "row-resize";
                                                 this.windowSizePosition = 4;
-                                                console.log("bottom");
+                                                // bottom
                                             }
                                             this.setWindow();
                                         }
                                     }
                                     onMouseOut={
                                         () => {
-                                            v.outsudeFrameStyle = "auto";
-                                            this.setWindow();
+                                            if (!this.widnowSizeSwitch) {
+                                                v.outsudeFrameStyle = "auto";
+                                                this.setWindow();
+                                            }
                                         }
                                     }
                                 >
@@ -212,14 +216,27 @@ export default class Windows extends React.Component<{ windows: Array<window> },
     }
 
     private windowSize(event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) {
-        if(this.windowSizePosition === 4) {
+        if (this.windowSizePosition === 4) {
             let changeY = event.clientY - this.windows[index].top;
-            if(changeY > 300)
+            if (changeY > 300)
                 this.windows[index].height = changeY;
-        } else if(this.windowSizePosition === 2) {
-            let changeX = event.clientX - this.windows[index].left - 50;
-            if(changeX > 300)
+        } else if (this.windowSizePosition === 3) {
+            let changeY = this.windows[index].top + this.windows[index].height - event.clientY;
+            console.log(changeY);
+            if (changeY > 300) {
+                this.windows[index].top = event.clientY + 2;
+                this.windows[index].height = changeY - 2;
+            }
+        } else if (this.windowSizePosition === 2) {
+            let changeX = event.clientX - this.windows[index].left - 52;
+            if (changeX > 300)
                 this.windows[index].width = changeX;
+        } else if (this.windowSizePosition === 1) {
+            let changeX = this.windows[index].left + this.windows[index].width - event.clientX + 48;
+            if (changeX > 300) {
+                this.windows[index].left = event.clientX - 48;
+                this.windows[index].width = changeX;
+            }
         }
         this.setWindow();
     }
@@ -246,7 +263,6 @@ export default class Windows extends React.Component<{ windows: Array<window> },
             icon: string | undefined,
         ) => {
             const windowSetting = this.windows[index];
-            //const settingFun = (data: any) => { return data === undefined }
             this.windows[index] = {
                 title: title === undefined ? windowSetting.title : title,
                 width: width === undefined ? windowSetting.width : width,

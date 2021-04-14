@@ -42,7 +42,7 @@ export default class Dock extends React.Component<DockType> {
                                     }
                                     onClick={
                                         () => {
-                                            this.props.windowsAdd("WTF", v.icon, v.app);
+                                            this.props.windowsAdd(v.appName, v.icon, v.app);
                                             this.appIconClick(index)
                                         }
                                     }
