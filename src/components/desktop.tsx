@@ -13,6 +13,8 @@ export default class Desktop extends React.Component<desktop> {
     private y: number;
     private opacity: number;
     private icons: Array<any>;
+    private indexX: number;
+    private indexY: number;
 
     constructor(props: desktop) {
         super(props);
@@ -24,16 +26,22 @@ export default class Desktop extends React.Component<desktop> {
         this.opacity = 0;
         this.style = { opacity: 0 };
         this.icons = [
-            {icon: appIcon, name: "ww", app: "ww"},
-            {icon: appIcon, name: "ww", app: "dsa"},
-            {icon: appIcon, name: "ww"},
-            {icon: appIcon, name: "ww", app: "dsa"},
-            {icon: appIcon, name: "ww", app: "dsa"},
-            {icon: appIcon, name: "ww", app: "dsa"},
-            {icon: appIcon, name: "ww", app: "dsa"},
-            {icon: appIcon, name: "ww", app: "dsa"},
-            {icon: appIcon, name: "ww", app: "dsa"}
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false },
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false },
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false },
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false },
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false },
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false },
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false },
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false },
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false },
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false },
+            { icon: appIcon, name: "ww", app: "ww", top: 0, left: 0, circle: false }
         ];
+        this.indexX = 0;
+        this.indexY = 0;
+        this.iconXY()();
+        window.onresize = this.iconXY();
         this.setState({ style: this.style });
     }
 
@@ -59,21 +67,19 @@ export default class Desktop extends React.Component<desktop> {
                 }
             >
 
-                <ul id="icons">
+                <div id="icons">
                     {
                         this.icons.map((v, index) => {
-                            // let top;
-                            // if(document.body.clientHeight - (index + 1) * 115 -70 > 0)
-                            //     top = index * 115;
-                            // else top = index
-                            // let left = 
                             return (
-                                <li
+                                <div
                                     className="desktop-icon"
                                     title={v.name}
                                     key={index.toString()}
                                     tabIndex={index}
                                     style={{
+                                        top: v.top,
+                                        left: v.left,
+                                        backgroundColor: v.circle ? "rgba(255, 255, 255, 0.3)" : ""
                                     }}
                                     onDoubleClick={
                                         () => {
@@ -87,11 +93,11 @@ export default class Desktop extends React.Component<desktop> {
                                             v.name
                                         }
                                     </div>
-                                </li>
+                                </div>
                             );
                         })
                     }
-                </ul>
+                </div>
 
                 <div id="circle"
                     style={this.style}
@@ -139,6 +145,42 @@ export default class Desktop extends React.Component<desktop> {
             top: top,
             left: left
         };
+        this.iconCircle(left, top);
         this.setState({ style: this.style });
+    }
+
+    iconXY() {
+        return () => {
+            this.indexX = 0;
+            this.indexY = 0;
+            this.icons.map((v, index) => {
+                if(document.body.clientHeight < this.indexY + 300) {
+                    this.indexY = 0;
+                    this.indexX += 136;
+                } else if(index !== 0){
+                    this.indexY += 115;
+                }
+                v.top = this.indexY;
+                v.left = this.indexX;
+                return v;
+            })
+            this.setState({ icons: this.icons });
+        }
+    }
+
+    iconCircle(left: number, top: number) {
+        this.icons.map((v, index) => {
+            if(
+                left < v.left + 70 &&
+                left + this.width > v.left + 70 &&
+                top < v.top + 70 &&
+                top + this.height > v.top + 70
+            ) {
+                v.circle = true;
+            } else {
+                v.circle = false;
+            }
+            // console.log(this.x)
+        })
     }
 }

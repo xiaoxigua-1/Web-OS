@@ -1,6 +1,6 @@
 #Dock
     position: absolute
-    left: 0
+    left: -60px
     top: 50%
     transform: translate(0, -50%)
     // background-color: rgb(0, 0, 0)
@@ -8,6 +8,10 @@
     -moz-user-select: none
     -o-user-select: none
     user-select: none
+    transition: left 0.5s
+    &:hover
+        left: 0
+
 
 .apps
     position: relative

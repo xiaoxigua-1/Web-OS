@@ -19,6 +19,7 @@
     bottom: 0
 
 .desktop-icon
+    position: absolute
     width: 136px
     height: 100px
     text-align: center
@@ -28,6 +29,8 @@
     -moz-user-select: none
     -o-user-select: none
     user-select: none
+    transition: top 0.5s
+    border-radius: 10px
 
     img
         width: 48px
@@ -36,7 +39,6 @@
     &:focus
         background-color: rgba(255, 255, 255, 0.3)
         outline: none
-        border-radius: 10px
 
 
 .desktop-name

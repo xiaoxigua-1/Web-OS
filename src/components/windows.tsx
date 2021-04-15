@@ -81,11 +81,11 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                             let windowData = this.windows[index];
                                             if (this.widnowSizeSwitch) return;
                                             this.windowSizeFocus = index;
-                                            if (e.clientX <= windowData.left + 50) {
+                                            if (e.clientX <= windowData.left) {
                                                 v.outsudeFrameStyle = "col-resize";
                                                 this.windowSizePosition = 1;
                                                 // left
-                                            } else if (e.clientX >= windowData.left + windowData.width + 50) {
+                                            } else if (e.clientX >= windowData.left + windowData.width) {
                                                 v.outsudeFrameStyle = "col-resize";
                                                 this.windowSizePosition = 2;
                                                 // right
@@ -223,13 +223,13 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                 this.windows[index].height = changeY - 2;
             }
         } else if (this.windowSizePosition === 2) {
-            let changeX = event.clientX - this.windows[index].left - 52;
+            let changeX = event.clientX - this.windows[index].left - 2;
             if (changeX > 300)
                 this.windows[index].width = changeX;
         } else if (this.windowSizePosition === 1) {
-            let changeX = this.windows[index].left + this.windows[index].width - event.clientX + 48;
+            let changeX = this.windows[index].left + this.windows[index].width - event.clientX - 2;
             if (changeX > 300) {
-                this.windows[index].left = event.clientX - 48;
+                this.windows[index].left = event.clientX + 2;
                 this.windows[index].width = changeX;
             }
         }
