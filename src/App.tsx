@@ -10,7 +10,7 @@ class App extends React.Component {
 
     //private ws: MessageWS;
     private windows: Array<window>;
-    
+
     constructor(props: React.Component<{}, {}, any>) {
         super(props)
         this.windows = [
@@ -23,9 +23,9 @@ class App extends React.Component {
             <div className="App">
                 <header className="App-header">
                 </header>
-                <Desktop windowsAdd={this.addWindow()}/>
-                <Dock windowsAdd={this.addWindow()} />
+                <Desktop windowsAdd={this.addWindow()} />
                 <Windows windows={this.windows} />
+                <Dock windowsAdd={this.addWindow()} />
             </div>
         );
     }

@@ -154,10 +154,10 @@ export default class Desktop extends React.Component<desktop> {
             this.indexX = 0;
             this.indexY = 0;
             this.icons.map((v, index) => {
-                if(document.body.clientHeight < this.indexY + 300) {
+                if (document.body.clientHeight < this.indexY + 300) {
                     this.indexY = 0;
                     this.indexX += 136;
-                } else if(index !== 0){
+                } else if (index !== 0) {
                     this.indexY += 115;
                 }
                 v.top = this.indexY;
@@ -170,7 +170,7 @@ export default class Desktop extends React.Component<desktop> {
 
     iconCircle(left: number, top: number) {
         this.icons.map((v, index) => {
-            if(
+            if (
                 left < v.left + 70 + 136 &&
                 left + this.width > v.left + 70 &&
                 top < v.top + 70 + 136 &&
