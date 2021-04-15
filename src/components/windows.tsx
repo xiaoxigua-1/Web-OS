@@ -2,7 +2,7 @@ import React from 'react';
 import "../sass/Windows.sass";
 import { windows, window } from "../type/window";
 
-export default class Windows extends React.Component<{ windows: Array<window> }, {}> {
+export default class Windows extends React.Component<windows, {}> {
 
     private windows: Array<window>;
     private windowMobileSwitch: boolean;
@@ -12,11 +12,15 @@ export default class Windows extends React.Component<{ windows: Array<window> },
     private widnowSizeSwitch: boolean;
     private windowSizeFocus: number | null;
     private windowMobileXY: Array<number>;
+    private windowHideFun: (index: number) => void;
+    private windowDeleteFun: (index: number) => void;
 
     constructor(props: windows) {
         super(props);
-        this.windowMobileSwitch = false;
+        this.windowHideFun = props.windowHide;
+        this.windowDeleteFun = props.windowDelete;
         this.windows = props.windows;
+        this.windowMobileSwitch = false;
         this.windowFocus = null;
         this.windowsStyle = {};
         this.windowSizePosition = null;
@@ -159,7 +163,7 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                             <div className="window--"
                                                 onClick={
                                                     () => {
-                                                        this.hideWindow(index);
+                                                        this.windowHideFun(index);
                                                     }
                                                 }
                                             >
@@ -167,7 +171,7 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                             <div className="window-x"
                                                 onMouseUp={
                                                     (e) => {
-                                                        this.deleteWindow(index);
+                                                        this.windowDeleteFun(index);
                                                     }
                                                 }
                                             >
@@ -228,19 +232,6 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                 this.windows[index].width = changeX;
             }
         }
-        this.setWindow();
-    }
-
-    private hideWindow(index: number) {
-        this.windows[index].style = {
-            opacity: 0,
-            pointerEvents: "none"
-        };
-        this.setWindow();
-    }
-
-    private deleteWindow(index: number) {
-        this.windows.splice(index, 1);
         this.setWindow();
     }
 

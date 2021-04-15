@@ -55,6 +55,8 @@ var Desktop = /** @class */ (function (_super) {
                 _this.clearXY();
             }, onMouseMove: function (e) {
                 _this.updateXY(e);
+            }, onClick: function () {
+                _this.iconCircle(0, 0);
             } },
             react_1["default"].createElement("div", { id: "icons" }, this.icons.map(function (v, index) {
                 return (react_1["default"].createElement("div", { className: "desktop-icon", title: v.name, key: index.toString(), tabIndex: index, style: {
@@ -76,6 +78,10 @@ var Desktop = /** @class */ (function (_super) {
     };
     Desktop.prototype.clearXY = function () {
         this.opacity = 0;
+        this.width = 0;
+        this.height = 0;
+        this.x = 0;
+        this.y = 0;
         this.style = {
             opacity: this.opacity
         };

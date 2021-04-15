@@ -19,8 +19,10 @@ var Windows = /** @class */ (function (_super) {
     __extends(Windows, _super);
     function Windows(props) {
         var _this = _super.call(this, props) || this;
-        _this.windowMobileSwitch = false;
+        _this.windowHideFun = props.windowHide;
+        _this.windowDeleteFun = props.windowDelete;
         _this.windows = props.windows;
+        _this.windowMobileSwitch = false;
         _this.windowFocus = null;
         _this.windowsStyle = {};
         _this.windowSizePosition = null;
@@ -121,10 +123,10 @@ var Windows = /** @class */ (function (_super) {
                         react_1["default"].createElement("div", { className: "window-title" }, v.title),
                         react_1["default"].createElement("span", { className: "window-tool" },
                             react_1["default"].createElement("div", { className: "window--", onClick: function () {
-                                    _this.hideWindow(index);
+                                    _this.windowHideFun(index);
                                 } }),
                             react_1["default"].createElement("div", { className: "window-x", onMouseUp: function (e) {
-                                    _this.deleteWindow(index);
+                                    _this.windowDeleteFun(index);
                                 } }))),
                     react_1["default"].createElement("div", { className: "window-content" }, appContent))));
         })));
@@ -168,17 +170,6 @@ var Windows = /** @class */ (function (_super) {
                 this.windows[index].width = changeX;
             }
         }
-        this.setWindow();
-    };
-    Windows.prototype.hideWindow = function (index) {
-        this.windows[index].style = {
-            opacity: 0,
-            pointerEvents: "none"
-        };
-        this.setWindow();
-    };
-    Windows.prototype.deleteWindow = function (index) {
-        this.windows.splice(index, 1);
         this.setWindow();
     };
     Windows.prototype.setWindowSetting = function (index) {

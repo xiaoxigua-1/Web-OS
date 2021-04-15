@@ -1,0 +1,47 @@
+#Dock {
+  position: fixed;
+  left: -60px;
+  top: 50%;
+  transform: translate(0, -50%);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  transition: left 0.5s;
+}
+#Dock:hover {
+  left: 0;
+}
+
+.apps {
+  position: relative;
+}
+
+.app {
+  transition: all 0.3s;
+  margin: 0 10px;
+}
+.app:hover {
+  background-color: #ffffff3f;
+  border-radius: 10px;
+}
+
+.dock-click {
+  animation-name: click;
+  animation-delay: 1s;
+}
+
+@keyframes click {
+  0% {
+    width: 80px;
+    opacity: 1;
+  }
+  100% {
+    width: 90px;
+    opacity: 0;
+  }
+}
+img {
+  height: 100%;
+  -webkit-user-drag: none;
+}

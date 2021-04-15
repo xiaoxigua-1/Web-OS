@@ -62,7 +62,12 @@ export default class Desktop extends React.Component<desktop> {
 
                 onMouseMove={
                     (e) => {
-                        this.updateXY(e)
+                        this.updateXY(e);
+                    }
+                }
+                onClick={
+                    () => {
+                        this.iconCircle(0, 0);
                     }
                 }
             >
@@ -115,6 +120,10 @@ export default class Desktop extends React.Component<desktop> {
 
     clearXY() {
         this.opacity = 0;
+        this.width = 0;
+        this.height = 0;
+        this.x = 0;
+        this.y = 0;
         this.style = {
             opacity: this.opacity
         }

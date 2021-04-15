@@ -1,6 +1,8 @@
 
 export interface windows {
-    windows: Array<any>
+    windows: Array<window>
+    windowHide: (index: number) => void,
+    windowDelete: (index: number) => void
 }
 
 export interface window {

@@ -1,0 +1,42 @@
+#works {
+  position: absolute;
+  height: 50px;
+  width: 100%;
+  background-color: rgba(50, 50, 50, 0.5);
+}
+
+.work {
+  position: relative;
+  display: inline-block;
+  height: 50px;
+  width: 70px;
+  margin: 0 1px;
+  border-right-width: 1.5px;
+  border-left-width: 1.5px;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  border-color: rgba(50, 50, 50, 0.8);
+  border-style: solid;
+  transition: background-color 0.1s;
+  animation: works-opacity 0.5s;
+}
+.work img {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.work:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes works-opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
