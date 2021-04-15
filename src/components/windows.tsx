@@ -54,9 +54,6 @@ export default class Windows extends React.Component<{ windows: Array<window> },
 
                         return (
                             <div
-                                style={{
-                                    pointerEvents: v.style.pointerEvents,
-                                }}
                                 key={index.toString()}
                             >
                                 <div className="window-outside-frame"
@@ -66,6 +63,7 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                         left: v.left - 4,
                                         top: v.top - 4,
                                         cursor: v.outsudeFrameStyle,
+                                        pointerEvents: v.style.pointerEvents
                                     }}
                                     onMouseDown={
                                         (e) => {
@@ -81,22 +79,18 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                             let windowData = this.windows[index];
                                             if (this.widnowSizeSwitch) return;
                                             this.windowSizeFocus = index;
-                                            if (e.clientX <= windowData.left) {
+                                            if (e.clientX <= windowData.left) { // left
                                                 v.outsudeFrameStyle = "col-resize";
                                                 this.windowSizePosition = 1;
-                                                // left
-                                            } else if (e.clientX >= windowData.left + windowData.width) {
+                                            } else if (e.clientX >= windowData.left + windowData.width) { // right
                                                 v.outsudeFrameStyle = "col-resize";
                                                 this.windowSizePosition = 2;
-                                                // right
-                                            } else if (e.clientY <= windowData.top) {
+                                            } else if (e.clientY <= windowData.top) { // top
                                                 v.outsudeFrameStyle = "row-resize";
                                                 this.windowSizePosition = 3;
-                                                // top
-                                            } else if (e.clientY >= windowData.top + windowData.height) {
+                                            } else if (e.clientY >= windowData.top + windowData.height) { // bottom
                                                 v.outsudeFrameStyle = "row-resize";
                                                 this.windowSizePosition = 4;
-                                                // bottom
                                             }
                                             this.setWindow();
                                         }
@@ -119,6 +113,7 @@ export default class Windows extends React.Component<{ windows: Array<window> },
                                         left: v.left,
                                         top: v.top,
                                         opacity: v.style.opacity,
+                                        pointerEvents: v.style.pointerEvents
                                     }}
                                     onMouseDown={
                                         () => {
@@ -211,22 +206,22 @@ export default class Windows extends React.Component<{ windows: Array<window> },
     }
 
     private windowSize(event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) {
-        if (this.windowSizePosition === 4) {
+        if (this.windowSizePosition === 4) { // bottom
             let changeY = event.clientY - this.windows[index].top;
             if (changeY > 300)
                 this.windows[index].height = changeY;
-        } else if (this.windowSizePosition === 3) {
+        } else if (this.windowSizePosition === 3) { // top
             let changeY = this.windows[index].top + this.windows[index].height - event.clientY;
             console.log(changeY);
             if (changeY > 300) {
                 this.windows[index].top = event.clientY + 2;
                 this.windows[index].height = changeY - 2;
             }
-        } else if (this.windowSizePosition === 2) {
+        } else if (this.windowSizePosition === 2) { // right
             let changeX = event.clientX - this.windows[index].left - 2;
             if (changeX > 300)
                 this.windows[index].width = changeX;
-        } else if (this.windowSizePosition === 1) {
+        } else if (this.windowSizePosition === 1) { // left
             let changeX = this.windows[index].left + this.windows[index].width - event.clientX - 2;
             if (changeX > 300) {
                 this.windows[index].left = event.clientX + 2;

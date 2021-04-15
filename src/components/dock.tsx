@@ -66,7 +66,6 @@ export default class Dock extends React.Component<DockType> {
         }
         this.appList[index].height = "80px";
         this.setState({ appList: this.appList });
-        console.log(this.appList);
     }
 
     iconHeightInit(index: number) {

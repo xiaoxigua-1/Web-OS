@@ -173,7 +173,7 @@ export default class Desktop extends React.Component<desktop> {
             if (
                 left < v.left + 70 + 136 &&
                 left + this.width > v.left + 70 &&
-                top < v.top + 70 + 136 &&
+                top < v.top + 70 + 115 &&
                 top + this.height > v.top + 70
             ) {
                 v.circle = true;
