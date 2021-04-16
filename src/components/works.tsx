@@ -26,8 +26,16 @@ export default class works extends React.Component<windows> {
                                         this.windowHideFun(index);
                                     }
                                 }
+                                onMouseLeave={
+                                    () => {
+                                        this.windowPreview(index);
+                                    }
+                                }
                             >
                                 <img src={v.icon} />
+                                <div className="work-preview">
+
+                                </div>
                             </div>
                         );
                     })
@@ -36,5 +44,7 @@ export default class works extends React.Component<windows> {
         );
     }
 
+    windowPreview(index: number) {
 
+    }
 }

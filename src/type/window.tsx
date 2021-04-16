@@ -1,6 +1,7 @@
 
 export interface windows {
-    windows: Array<window>
+    windows: Array<window>,
+    windowsZIndex: Array<number>,
     windowHide: (index: number) => void,
     windowDelete: (index: number) => void
 }

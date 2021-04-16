@@ -24,15 +24,16 @@ var App = /** @class */ (function (_super) {
     function App(props) {
         var _this = _super.call(this, props) || this;
         _this.windows = [];
+        _this.windowsZIndex = [];
         return _this;
         //this.ws = new MessageWS("ws://127.0.0.1:8000")
     }
     App.prototype.render = function () {
         return (react_1["default"].createElement("div", { className: "App" },
             react_1["default"].createElement("header", { className: "App-header" }),
-            react_1["default"].createElement(works_1["default"], { windows: this.windows, windowHide: this.windowHide(), windowDelete: this.deleteWindow() }),
+            react_1["default"].createElement(works_1["default"], { windows: this.windows, windowHide: this.windowHide(), windowDelete: this.deleteWindow(), windowsZIndex: this.windowsZIndex }),
             react_1["default"].createElement(desktop_1["default"], { windowsAdd: this.addWindow() }),
-            react_1["default"].createElement(windows_1["default"], { windows: this.windows, windowHide: this.windowHide(), windowDelete: this.deleteWindow() }),
+            react_1["default"].createElement(windows_1["default"], { windows: this.windows, windowHide: this.windowHide(), windowDelete: this.deleteWindow(), windowsZIndex: this.windowsZIndex }),
             react_1["default"].createElement(dock_1["default"], { windowsAdd: this.addWindow() })));
     };
     App.prototype.addWindow = function () {
@@ -49,6 +50,7 @@ var App = /** @class */ (function (_super) {
                 outsudeFrameStyle: "auto",
                 app: app
             });
+            _this.windowsZIndex.push(_this.windows.length - 1);
             _this.setState({ windows: _this.windows });
         };
     };
@@ -56,6 +58,14 @@ var App = /** @class */ (function (_super) {
         var _this = this;
         return function (index) {
             _this.windows.splice(index, 1);
+            var windowZIndex = _this.windowsZIndex.indexOf(index);
+            _this.windowsZIndex.splice(windowZIndex, 1);
+            _this.windowsZIndex.map(function (v) {
+                if (v > index)
+                    return v - 1;
+                else
+                    return v;
+            });
             _this.setState({ windows: _this.windows });
         };
     };

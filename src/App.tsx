@@ -11,11 +11,13 @@ class App extends React.Component {
 
     //private ws: MessageWS;
     private windows: Array<window>;
+    private windowsZIndex: Array<number>;
 
     constructor(props: React.Component<{}, {}, any>) {
         super(props)
         this.windows = [
         ];
+        this.windowsZIndex = [];
         //this.ws = new MessageWS("ws://127.0.0.1:8000")
     }
 
@@ -28,12 +30,14 @@ class App extends React.Component {
                     windows={this.windows}
                     windowHide={this.windowHide()}
                     windowDelete={this.deleteWindow()}
+                    windowsZIndex={this.windowsZIndex}
                 />
                 <Desktop windowsAdd={this.addWindow()} />
                 <Windows
                     windows={this.windows}
                     windowHide={this.windowHide()}
                     windowDelete={this.deleteWindow()}
+                    windowsZIndex={this.windowsZIndex}
                 />
                 <Dock windowsAdd={this.addWindow()} />
             </div>
@@ -52,7 +56,8 @@ class App extends React.Component {
                 style: { opacity: 1 },
                 outsudeFrameStyle: "auto",
                 app: app
-            })
+            });
+            this.windowsZIndex.push(this.windows.length - 1);
             this.setState({ windows: this.windows });
         }
     }
@@ -60,6 +65,12 @@ class App extends React.Component {
     private deleteWindow() {
         return (index: number) => {
             this.windows.splice(index, 1);
+            let windowZIndex = this.windowsZIndex.indexOf(index);
+            this.windowsZIndex.splice(windowZIndex, 1);
+            this.windowsZIndex.map(v => {
+                if (v > index) return v - 1;
+                else return v;
+            })
             this.setState({ windows: this.windows });
         }
     }

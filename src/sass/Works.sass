@@ -29,8 +29,21 @@
     &:hover
         background-color: rgba(255, 255, 255, 0.1)
 
+    &:hover
+        .work-preview
+            background-color: #ffff
+            pointer-events: auto
+
 @keyframes works-opacity
     0%
         opacity: 0
     100%
         opacity: 1
+
+.work-preview
+    position: absolute
+    height: 160px
+    top: 55px
+    width: 100px
+    pointer-events: none
+    z-index: 9999

@@ -22,6 +22,7 @@ var Windows = /** @class */ (function (_super) {
         _this.windowHideFun = props.windowHide;
         _this.windowDeleteFun = props.windowDelete;
         _this.windows = props.windows;
+        _this.windowsZIndex = props.windowsZIndex;
         _this.windowMobileSwitch = false;
         _this.windowFocus = null;
         _this.windowsStyle = {};
@@ -54,7 +55,8 @@ var Windows = /** @class */ (function (_super) {
                         left: v.left - 4,
                         top: v.top - 4,
                         cursor: v.outsudeFrameStyle,
-                        pointerEvents: v.style.pointerEvents
+                        pointerEvents: v.style.pointerEvents,
+                        zIndex: (_this.windowsZIndex.indexOf(index) + 1) * 2 - 1
                     }, onMouseDown: function (e) {
                         _this.widnowSizeSwitch = true;
                         _this.windowsStyle = {
@@ -95,14 +97,15 @@ var Windows = /** @class */ (function (_super) {
                         left: v.left,
                         top: v.top,
                         opacity: v.style.opacity,
-                        pointerEvents: v.style.pointerEvents
+                        pointerEvents: v.style.pointerEvents,
+                        zIndex: (_this.windowsZIndex.indexOf(index) + 1) * 2
                     }, onMouseDown: function () {
                         _this.windowsFocus(index);
                     } },
                     react_1["default"].createElement("div", { className: "window-header", onMouseDown: function (e) {
                             // this.windowsFocus(index);
                             _this.windowMobileSwitch = true;
-                            _this.windowFocus = _this.windows.length - 1;
+                            _this.windowFocus = index;
                             _this.windowMobileXY = [
                                 e.clientX - _this.windows[index].left,
                                 e.clientY - _this.windows[index].top
@@ -125,6 +128,7 @@ var Windows = /** @class */ (function (_super) {
                             react_1["default"].createElement("div", { className: "window--", onClick: function () {
                                     _this.windowHideFun(index);
                                 } }),
+                            react_1["default"].createElement("div", { className: "window-o" }),
                             react_1["default"].createElement("div", { className: "window-x", onMouseUp: function (e) {
                                     _this.windowDeleteFun(index);
                                 } }))),
@@ -133,15 +137,32 @@ var Windows = /** @class */ (function (_super) {
     };
     Windows.prototype.windowMobile = function (event, index) {
         if (this.windowMobileSwitch) {
-            this.windows[index].left = event.clientX - this.windowMobileXY[0];
-            this.windows[index].top = event.clientY - this.windowMobileXY[1];
+            if (70 - this.windows[index].width < event.clientX - this.windowMobileXY[0] &&
+                document.body.clientWidth - 70 > event.clientX - this.windowMobileXY[0]) {
+                this.windows[index].left = event.clientX - this.windowMobileXY[0];
+            }
+            if (event.clientY - this.windowMobileXY[1] >= 49)
+                this.windows[index].top = event.clientY - this.windowMobileXY[1];
+            // Hmmmm
+            var windowData = this.windows[index];
+            if (windowData.top <= 50) {
+                console.log("top");
+            }
+            else if (windowData.left <= 0) {
+                console.log("left");
+            }
+            else if (windowData.left + windowData.width > document.body.clientWidth) {
+                console.log("right");
+            }
+            else {
+            }
             this.setWindow();
         }
     };
     Windows.prototype.windowsFocus = function (index) {
-        var window = this.windows[index];
-        this.windows.splice(index, 1);
-        this.windows.push(window);
+        var windowIndex = this.windowsZIndex.indexOf(index);
+        this.windowsZIndex.splice(windowIndex, 1);
+        this.windowsZIndex.push(index);
         this.setWindow();
     };
     Windows.prototype.windowSize = function (event, index) {
@@ -191,7 +212,7 @@ var Windows = /** @class */ (function (_super) {
         };
     };
     Windows.prototype.setWindow = function () {
-        this.setState({ windows: this.windows });
+        this.setState({ windows: this.windows, windowsZIndex: this.windowsZIndex });
     };
     return Windows;
 }(react_1["default"].Component));

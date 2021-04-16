@@ -28,9 +28,14 @@ var works = /** @class */ (function (_super) {
         return (react_1["default"].createElement("div", { id: "works" }, this.windows.map(function (v, index) {
             return (react_1["default"].createElement("div", { className: "work", onClick: function () {
                     _this.windowHideFun(index);
+                }, onMouseLeave: function () {
+                    _this.windowPreview(index);
                 } },
-                react_1["default"].createElement("img", { src: v.icon })));
+                react_1["default"].createElement("img", { src: v.icon }),
+                react_1["default"].createElement("div", { className: "work-preview" })));
         })));
+    };
+    works.prototype.windowPreview = function (index) {
     };
     return works;
 }(react_1["default"].Component));
