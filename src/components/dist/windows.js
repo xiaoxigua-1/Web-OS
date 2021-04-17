@@ -49,6 +49,7 @@ var Windows = /** @class */ (function (_super) {
             }, style: this.windowsStyle }, this.windows.map(function (v, index) {
             var appContent = v.app;
             return (react_1["default"].createElement("div", { key: index.toString() },
+                react_1["default"].createElement("div", { className: "window-fit", style: _this.windowFit(index) }),
                 react_1["default"].createElement("div", { className: "window-outside-frame", style: {
                         height: v.height + 8,
                         width: v.width + 8,
@@ -141,20 +142,24 @@ var Windows = /** @class */ (function (_super) {
                 document.body.clientWidth - 70 > event.clientX - this.windowMobileXY[0]) {
                 this.windows[index].left = event.clientX - this.windowMobileXY[0];
             }
-            if (event.clientY - this.windowMobileXY[1] >= 49)
+            if (event.clientY - this.windowMobileXY[1] >= 48)
                 this.windows[index].top = event.clientY - this.windowMobileXY[1];
             // Hmmmm
             var windowData = this.windows[index];
             if (windowData.top <= 50) {
                 console.log("top");
+                this.windows[index].fit = "top";
             }
             else if (windowData.left <= 0) {
                 console.log("left");
+                this.windows[index].fit = "left";
             }
             else if (windowData.left + windowData.width > document.body.clientWidth) {
                 console.log("right");
+                this.windows[index].fit = "right";
             }
             else {
+                this.windows[index].fit = "none";
             }
             this.setWindow();
         }
@@ -193,24 +198,65 @@ var Windows = /** @class */ (function (_super) {
         }
         this.setWindow();
     };
-    Windows.prototype.setWindowSetting = function (index) {
-        var _this = this;
-        return function (title, width, height, top, left, icon) {
-            var windowSetting = _this.windows[index];
-            _this.windows[index] = {
-                title: title === undefined ? windowSetting.title : title,
-                width: width === undefined ? windowSetting.width : width,
-                height: height === undefined ? windowSetting.height : height,
-                top: top === undefined ? windowSetting.top : top,
-                left: left === undefined ? windowSetting.left : left,
-                icon: icon === undefined ? windowSetting.icon : icon,
-                style: windowSetting.style,
-                app: windowSetting.app,
-                outsudeFrameStyle: windowSetting.outsudeFrameStyle
-            };
-            _this.setWindow();
-        };
+    Windows.prototype.windowFit = function (index) {
+        var windowData = this.windows[index];
+        if (windowData.fit === "none")
+            return ({
+                width: windowData.width,
+                height: windowData.height,
+                top: windowData.top,
+                left: windowData.left
+            });
+        else if (windowData.fit === "top")
+            return ({
+                width: document.body.clientWidth,
+                height: document.body.clientHeight - 50,
+                top: 50,
+                left: 0,
+                backgroundColor: "#ffff"
+            });
+        else if (windowData.fit === "left")
+            return ({
+                width: document.body.clientWidth / 2,
+                height: document.body.clientHeight - 50,
+                top: 50,
+                left: 0,
+                backgroundColor: "#ffff"
+            });
+        else if (windowData.fit === "right")
+            return ({
+                width: document.body.clientWidth / 2,
+                height: document.body.clientHeight - 50,
+                top: 50,
+                left: document.body.clientWidth / 2,
+                backgroundColor: "#ffff"
+            });
+        return {};
     };
+    // private setWindowSetting(index: number) {
+    //     return (
+    //         title: string | undefined,
+    //         width: number | undefined,
+    //         height: number | undefined,
+    //         top: number | undefined,
+    //         left: number | undefined,
+    //         icon: string | undefined,
+    //     ) => {
+    //         const windowSetting = this.windows[index];
+    //         this.windows[index] = {
+    //             title: title === undefined ? windowSetting.title : title,
+    //             width: width === undefined ? windowSetting.width : width,
+    //             height: height === undefined ? windowSetting.height : height,
+    //             top: top === undefined ? windowSetting.top : top,
+    //             left: left === undefined ? windowSetting.left : left,
+    //             icon: icon === undefined ? windowSetting.icon : icon,
+    //             style: windowSetting.style,
+    //             app: windowSetting.app,
+    //             outsudeFrameStyle: windowSetting.outsudeFrameStyle
+    //         }
+    //         this.setWindow();
+    //     }
+    // }
     Windows.prototype.setWindow = function () {
         this.setState({ windows: this.windows, windowsZIndex: this.windowsZIndex });
     };

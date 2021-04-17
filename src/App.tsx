@@ -53,6 +53,7 @@ class App extends React.Component {
                 height: 600,
                 left: document.body.clientWidth / 2 - 400 + this.windows.length * 20,
                 top: document.body.clientHeight / 2 - 300 + this.windows.length * 20,
+                fit: "none",
                 style: { opacity: 1 },
                 outsudeFrameStyle: "auto",
                 app: app

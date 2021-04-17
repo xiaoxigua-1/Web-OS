@@ -46,6 +46,7 @@ var App = /** @class */ (function (_super) {
                 height: 600,
                 left: document.body.clientWidth / 2 - 400 + _this.windows.length * 20,
                 top: document.body.clientHeight / 2 - 300 + _this.windows.length * 20,
+                fit: "none",
                 style: { opacity: 1 },
                 outsudeFrameStyle: "auto",
                 app: app

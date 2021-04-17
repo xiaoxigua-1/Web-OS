@@ -31,6 +31,7 @@ export default class works extends React.Component<windows> {
                                         this.windowPreview(index);
                                     }
                                 }
+                                key={index.toString()}
                             >
                                 <img src={v.icon} />
                                 <div className="work-preview">

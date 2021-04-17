@@ -13,6 +13,7 @@ export interface window {
     height: number,
     top: number,
     left: number,
+    fit: string,
     style: React.CSSProperties,
     outsudeFrameStyle: string
     app: JSX.Element

@@ -30,7 +30,7 @@ var works = /** @class */ (function (_super) {
                     _this.windowHideFun(index);
                 }, onMouseLeave: function () {
                     _this.windowPreview(index);
-                } },
+                }, key: index.toString() },
                 react_1["default"].createElement("img", { src: v.icon }),
                 react_1["default"].createElement("div", { className: "work-preview" })));
         })));

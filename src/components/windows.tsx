@@ -62,6 +62,10 @@ export default class Windows extends React.Component<windows, {}> {
                             <div
                                 key={index.toString()}
                             >
+                                <div
+                                    className="window-fit"
+                                    style={this.windowFit(index)}
+                                ></div>
                                 <div className="window-outside-frame"
                                     style={{
                                         height: v.height + 8,
@@ -209,18 +213,21 @@ export default class Windows extends React.Component<windows, {}> {
             ) {
                 this.windows[index].left = event.clientX - this.windowMobileXY[0];
             }
-            if (event.clientY - this.windowMobileXY[1] >= 49)
+            if (event.clientY - this.windowMobileXY[1] >= 48)
                 this.windows[index].top = event.clientY - this.windowMobileXY[1];
             // Hmmmm
             let windowData = this.windows[index];
             if (windowData.top <= 50) {
                 console.log("top");
-            } else if (windowData.left <= 0) {
+                this.windows[index].fit = "top";
+            }else if (windowData.left <= 0) {
                 console.log("left");
+                this.windows[index].fit = "left";
             } else if (windowData.left + windowData.width > document.body.clientWidth) {
                 console.log("right");
+                this.windows[index].fit = "right";
             } else {
-
+                this.windows[index].fit = "none";
             }
             this.setWindow();
         }
@@ -259,30 +266,70 @@ export default class Windows extends React.Component<windows, {}> {
         this.setWindow();
     }
 
-    private setWindowSetting(index: number) {
-        return (
-            title: string | undefined,
-            width: number | undefined,
-            height: number | undefined,
-            top: number | undefined,
-            left: number | undefined,
-            icon: string | undefined,
-        ) => {
-            const windowSetting = this.windows[index];
-            this.windows[index] = {
-                title: title === undefined ? windowSetting.title : title,
-                width: width === undefined ? windowSetting.width : width,
-                height: height === undefined ? windowSetting.height : height,
-                top: top === undefined ? windowSetting.top : top,
-                left: left === undefined ? windowSetting.left : left,
-                icon: icon === undefined ? windowSetting.icon : icon,
-                style: windowSetting.style,
-                app: windowSetting.app,
-                outsudeFrameStyle: windowSetting.outsudeFrameStyle
+    windowFit(index: number): React.CSSProperties {
+        let windowData = this.windows[index];
+        if (windowData.fit === "none") return (
+            {
+                width: windowData.width,
+                height: windowData.height,
+                top: windowData.top,
+                left: windowData.left
             }
-            this.setWindow();
-        }
+        )
+        else if (windowData.fit === "top") return (
+            {
+                width: document.body.clientWidth,
+                height: document.body.clientHeight - 50,
+                top: 50,
+                left: 0,
+                backgroundColor: "#ffff"
+            }
+        )
+        else if (windowData.fit === "left") return (
+            {
+                width: document.body.clientWidth / 2,
+                height: document.body.clientHeight - 50,
+                top: 50,
+                left: 0,
+                backgroundColor: "#ffff"
+            }
+        )
+        else if(windowData.fit === "right") return (
+            {
+                width: document.body.clientWidth / 2,
+                height: document.body.clientHeight - 50,
+                top: 50,
+                left: document.body.clientWidth / 2,
+                backgroundColor: "#ffff"
+            }
+        )
+        return{}
     }
+
+    // private setWindowSetting(index: number) {
+    //     return (
+    //         title: string | undefined,
+    //         width: number | undefined,
+    //         height: number | undefined,
+    //         top: number | undefined,
+    //         left: number | undefined,
+    //         icon: string | undefined,
+    //     ) => {
+    //         const windowSetting = this.windows[index];
+    //         this.windows[index] = {
+    //             title: title === undefined ? windowSetting.title : title,
+    //             width: width === undefined ? windowSetting.width : width,
+    //             height: height === undefined ? windowSetting.height : height,
+    //             top: top === undefined ? windowSetting.top : top,
+    //             left: left === undefined ? windowSetting.left : left,
+    //             icon: icon === undefined ? windowSetting.icon : icon,
+    //             style: windowSetting.style,
+    //             app: windowSetting.app,
+    //             outsudeFrameStyle: windowSetting.outsudeFrameStyle
+    //         }
+    //         this.setWindow();
+    //     }
+    // }
 
     private setWindow() {
         this.setState({ windows: this.windows, windowsZIndex: this.windowsZIndex });
