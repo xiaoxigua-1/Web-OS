@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Web-OS/static/css/main.6a1a0dfe.chunk.css",
+    "main.js": "/Web-OS/static/js/main.8cbb2026.chunk.js",
+    "main.js.map": "/Web-OS/static/js/main.8cbb2026.chunk.js.map",
+    "runtime-main.js": "/Web-OS/static/js/runtime-main.53c19b68.js",
+    "runtime-main.js.map": "/Web-OS/static/js/runtime-main.53c19b68.js.map",
+    "static/js/2.0a168ea7.chunk.js": "/Web-OS/static/js/2.0a168ea7.chunk.js",
+    "static/js/2.0a168ea7.chunk.js.map": "/Web-OS/static/js/2.0a168ea7.chunk.js.map",
+    "static/js/3.8acd7a6b.chunk.js": "/Web-OS/static/js/3.8acd7a6b.chunk.js",
+    "static/js/3.8acd7a6b.chunk.js.map": "/Web-OS/static/js/3.8acd7a6b.chunk.js.map",
+    "index.html": "/Web-OS/index.html",
+    "static/css/main.6a1a0dfe.chunk.css.map": "/Web-OS/static/css/main.6a1a0dfe.chunk.css.map",
+    "static/js/2.0a168ea7.chunk.js.LICENSE.txt": "/Web-OS/static/js/2.0a168ea7.chunk.js.LICENSE.txt",
+    "static/media/control-center.85fcf348.png": "/Web-OS/static/media/control-center.85fcf348.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.53c19b68.js",
+    "static/js/2.0a168ea7.chunk.js",
+    "static/css/main.6a1a0dfe.chunk.css",
+    "static/js/main.8cbb2026.chunk.js"
+  ]
+}
